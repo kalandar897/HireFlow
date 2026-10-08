@@ -103,3 +103,47 @@ HireFlow/
 │
 ├── manage.py
 └── README.md
+
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/home.png)
+
+### Registration
+![Registration](screenshots/registration.png)
+
+### Login
+![Login](screenshots/login.png)
+
+### Jobs Page
+![Jobs Page](screenshots/jobs.png)
+
+### Apply for Job
+![Apply for Job](screenshots/apply-job.png)
+
+### Candidate Dashboard
+![Candidate Dashboard](screenshots/candidate-dashboard.png)
+
+### Recruiter Dashboard
+![Recruiter Dashboard](screenshots/recruiter-dashboard.png)
+
+### Recruiter Applications
+![Recruiter Applications](screenshots/recruiter-applications.png)
+
+### Interview Scheduling
+![Interview Scheduling](screenshots/interview-scheduling.png)
+
+### Notifications
+![Notifications](screenshots/notifications.png)
+
+### Charts
+![Charts](screenshots/charts.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### Admin Dashboard - Users
+![Admin Dashboard Users](screenshots/admin-dashboard-2.png)
+
+### Admin Dashboard - Applications
+![Admin Dashboard Applications](screenshots/admin-dashboard-3.png)
