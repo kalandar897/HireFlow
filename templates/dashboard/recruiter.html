@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Recruiter Dashboard | HireFlow{% endblock %}
+
+{% block content %}
+
+<h2>Recruiter Dashboard</h2>
+
+<a href="{% url 'recruiter_all_applications' %}" class="btn btn-primary">
+    View All Applications
+</a>
+<p>Welcome, {{ request.user.username }}!</p>
+
+<hr>
+
+<h3>Quick Actions</h3>
+<p>
+    <a href="{% url 'create_job' %}">+ Post a New Job</a>
+    &nbsp; | &nbsp;
+    <a href="{% url 'recruiter_applications' %}">
+        Manage Candidate Applications
+    </a>
+</p>
+
+<hr>
+
+<h3>Recruitment Analytics</h3>
+
+<div class="dashboard-stats">
+    <div class="application-card">
+        <h4>Total Jobs</h4>
+        <p>{{ stats.total_jobs }}</p>
+    </div>
+
+    <div class="application-card">
+        <h4>Total Applications</h4>
+        <p>{{ stats.total_applications }}</p>
+    </div>
+
+    <div class="application-card">
+        <h4>Shortlisted</h4>
+        <p>{{ stats.shortlisted }}</p>
+    </div>
+
+    <div class="application-card">
+        <h4>Total Interviews</h4>
+        <p>{{ stats.total_interviews }}</p>
+    </div>
+
+    <div class="application-card">
+        <h4>Selected</h4>
+        <p>{{ stats.selected }}</p>
+    </div>
+
+    <div class="application-card">
+        <h4>Rejected</h4>
+        <p>{{ stats.rejected }}</p>
+    </div>
+</div>
+
+<hr>
+
+<h3>Recent Applications</h3>
+
+{% for application in recent_applications %}
+    <article class="application-card">
+        <h4>{{ application.job.title }}</h4>
+
+        <p>
+            <strong>Candidate:</strong>
+            {{ application.candidate.username }}
+        </p>
+
+        <p>
+            <strong>Applied:</strong>
+            {{ application.applied_at|date:"d M Y, h:i A" }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ application.get_status_display|default:application.status }}
+        </p>
+
+        <a href="{% url 'view_candidate_profile' application.id %}">
+            View Candidate Profile
+        </a>
+    </article>
+    <hr>
+{% empty %}
+    <p>No applications received yet.</p>
+{% endfor %}
+
+<p>
+    <a href="{% url 'recruiter_applications' %}">
+        View All Applications
+    </a>
+</p>
+
+<hr>
+
+<h3>Your Job Listings</h3>
+
+{% for job in jobs %}
+    <article class="application-card">
+        <h4>{{ job.title }}</h4>
+
+        <p>{{ job.company }} — {{ job.location }}</p>
+
+        <p>
+            <strong>Status:</strong>
+            {% if job.is_active %}
+                Active
+            {% else %}
+                Closed
+            {% endif %}
+        </p>
+        <p>
+            <a href="{% url 'edit_job' job.id %}">Edit Job</a>
+        </p>
+
+        <form method="post"
+            action="{% url 'toggle_recruiter_job_status' job.id %}">
+            {% csrf_token %}
+
+            {% if job.is_active %}
+                <button type="submit">Close Job</button>
+            {% else %}
+                <button type="submit">Reopen Job</button>
+            {% endif %}
+        </form>
+    </article>
+{% empty %}
+    <p>You have not posted any jobs yet.</p>
+    <a href="{% url 'create_job' %}">Post your first job</a>
+{% endfor %}
+
+<hr>
+
+<h3>Application Status Chart</h3>
+<div style="max-width: 500px;">
+    <canvas id="statusChart"></canvas>
+</div>
+
+<h3>Applications by Job</h3>
+<div style="max-width: 700px;">
+    <canvas id="jobChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{ application_status_data|json_script:"status-data" }}
+{{ job_application_data|json_script:"job-data" }}
+
+<script>
+    const statusData = JSON.parse(
+        document.getElementById("status-data").textContent
+    );
+
+    const jobData = JSON.parse(
+        document.getElementById("job-data").textContent
+    );
+
+    new Chart(document.getElementById("statusChart"), {
+        type: "pie",
+        data: {
+            labels: statusData.map(item => item.status),
+            datasets: [{
+                data: statusData.map(item => item.total)
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    new Chart(document.getElementById("jobChart"), {
+        type: "bar",
+        data: {
+            labels: jobData.map(item => item.title),
+            datasets: [{
+                label: "Applications",
+                data: jobData.map(item => item.application_count)
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

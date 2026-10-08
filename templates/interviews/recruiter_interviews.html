@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Recruiter Interviews | HireFlow{% endblock %}
+
+{% block content %}
+<h2>Manage Interviews</h2>
+
+{% for interview in interviews %}
+    <div class="application-card">
+        <h3>{{ interview.application.job.title }}</h3>
+
+        <p>
+            <strong>Candidate:</strong>
+            {{ interview.application.candidate.username }}
+        </p>
+
+        <p>
+            <strong>Date and Time:</strong>
+            {{ interview.interview_date|date:"d M Y, h:i A" }}
+        </p>
+
+        <p>
+            <strong>Meeting Mode:</strong>
+            {{ interview.get_meeting_mode_display }}
+        </p>
+
+        <p>
+            <strong>Interview Status:</strong>
+            {{ interview.get_status_display }}
+        </p>
+        
+        {% if interview.status == "SCHEDULED" %}
+            <form method="post"
+                action="{% url 'update_interview_status' interview.id %}">
+                {% csrf_token %}
+
+                <button type="submit" name="status" value="COMPLETED">
+                    Mark Completed
+                </button>
+
+                <button type="submit" name="status" value="CANCELLED">
+                    Cancel Interview
+                </button>
+            </form>
+        {% endif %}
+    </div>
+    <hr>
+{% empty %}
+    <p>No interviews have been scheduled yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,518 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+    line-height: 1.6;
+}
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1d4ed8;
+}
+
+.navbar {
+    background: #14213d;
+    color: white;
+    padding: 16px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.navbar nav a {
+    color: white;
+    font-size: 14px;
+}
+
+.navbar nav a:hover {
+    color: #93c5fd;
+}
+
+.navbar form {
+    display: inline;
+    margin: 0;
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0;
+}
+
+.navbar button:hover {
+    color: #77b6fe;
+}
+
+.notification-badge {
+    background: #f65c5c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    margin-left: 4px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+h1 {
+    color: #14213d;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #14213d;
+    margin-bottom: 10px;
+}
+
+h3 {
+    color: #14213d;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 18px 0;
+}
+
+button,
+input[type="submit"] {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #334155;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    max-width: 550px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+    background: white;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+input[type="file"] {
+    padding: 7px;
+}
+
+.errorlist {
+    color: #dc2626;
+    list-style: none;
+    font-size: 13px;
+}
+
+.card,
+.job-card,
+.application-card,
+.interview-card,
+.notification-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.job-card h3 {
+    margin-bottom: 10px;
+}
+
+.job-card p {
+    margin: 7px 0;
+    color: #475569;
+}
+
+.job-card strong {
+    color: #334155;
+}
+
+.job-card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 9px 16px;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+}
+
+.job-card a:hover {
+    background: #1d4ed8;
+}
+
+.application-card h3 {
+    margin-bottom: 10px;
+}
+
+.application-card p {
+    margin: 7px 0;
+}
+
+.application-card select {
+    width: auto;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card h3 {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.stat-card .number {
+    color: #14213d;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.dashboard-section {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: #14213d;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover td {
+    background: #f8fafc;
+}
+
+.profile-container {
+    max-width: 750px;
+    margin: 35px auto;
+    padding: 25px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.profile-description {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.profile-form p {
+    margin-bottom: 16px;
+}
+
+.profile-button {
+    background: #2563eb;
+}
+
+.profile-back {
+    margin-left: 10px;
+}
+
+.login-card,
+.register-card {
+    background: white;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.login-card h1,
+.register-card h1 {
+    text-align: center;
+}
+
+.login-description {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.login-button {
+    width: 100%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.pagination a {
+    background: #2563eb;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+}
+
+.pagination a:hover {
+    background: #1d4ed8;
+}
+
+.messages {
+    margin: 15px auto;
+    max-width: 1100px;
+}
+
+.message {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navbar {
+        padding: 15px 4%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 94%;
+        margin: 25px auto;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .navbar nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-container,
+    .login-card,
+    .register-card {
+        padding: 20px;
+    }
+
+    table {
+        min-width: 650px;
+    }
+
+    .job-card,
+    .application-card,
+    .interview-card,
+    .notification-card {
+        padding: 16px;
+    }
+}
+
+.candidate-profile {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.candidate-profile h1 {
+    margin: 0;
+    color: #14213d;
+    font-size: 28px;
+}
+
+.candidate-profile .subtitle {
+    color: #64748b;
+    margin-top: 6px;
+}
+
+.candidate-profile hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 25px 0;
+}
+
+.candidate-profile h2 {
+    color: #2563eb;
+    font-size: 22px;
+    margin-bottom: 18px;
+}
+
+.candidate-info {
+    margin-top: 10px;
+}
+
+.profile-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.profile-row strong:first-child {
+    min-width: 170px;
+    color: #475569;
+}
+
+.candidate-profile p {
+    margin: 12px 0;
+    color: #334155;
+}
+
+.candidate-profile p strong {
+    color: #1e293b;
+}
+
+.candidate-profile a[href*="/media/"] {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 8px 14px;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.candidate-profile a[href*="/media/"]:hover {
+    background: #1d4ed8;
+    color: white;
+}
+
+.candidate-profile a[href*="recruiter_applications"] {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 17px;
+    background: #14213d;
+    color: white;
+    border-radius: 7px;
+    font-weight: 600;
+}
+
+.candidate-profile a[href*="recruiter_applications"]:hover {
+    background: #1e3a5f;
+    color: white;
+}
+
+@media (max-width: 700px) {
+
+    .candidate-profile {
+        width: 94%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .candidate-profile h1 {
+        font-size: 24px;
+    }
+
+    .candidate-profile p {
+        line-height: 1.7;
+    }
+
+    .candidate-profile a[href*="/media/"] {
+        margin-top: 8px;
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}My Interviews | HireFlow{% endblock %}
+
+{% block content %}
+
+<h2>My Scheduled Interviews</h2>
+
+{% for interview in interviews %}
+
+    <div class="application-card">
+
+        <h3>{{ interview.application.job.title }}</h3>
+
+        <p>
+            <strong>Company:</strong>
+            {{ interview.application.job.company }}
+        </p>
+
+        <p>
+            <strong>Date and Time:</strong>
+            {{ interview.interview_date|date:"d M Y, h:i A" }}
+        </p>
+
+        <p>
+            <strong>Mode:</strong>
+            {{ interview.meeting_mode }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ interview.status }}
+        </p>
+
+    </div>
+
+    <hr>
+
+{% empty %}
+
+    <p>You have no scheduled interviews yet.</p>
+
+{% endfor %}
+
+{% endblock %}

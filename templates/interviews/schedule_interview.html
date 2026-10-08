@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Schedule Interview | HireFlow{% endblock %}
+
+{% block content %}
+
+<h2>Schedule Interview</h2>
+
+<h3>{{ application.job.title }}</h3>
+
+<p>
+    <strong>Candidate:</strong>
+    {{ application.candidate.username }}
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Schedule Interview</button>
+</form>
+
+<a href="{% url 'recruiter_applications' %}">
+    Back to Applications
+</a>
+
+{% endblock %}

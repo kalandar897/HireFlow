@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}HireFlow{% endblock %}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <header class="navbar">
+        <a class="logo" href="/">HireFlow</a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/jobs/">Jobs</a>
+            <a href="/accounts/login/">Login</a>
+            <a href="/accounts/register/">Register</a>
+            <a href="{% url 'notification_list' %}">
+                🔔 Notifications
+                {% if user.is_authenticated %}
+                    {% with unread_count=user.notifications.all %}
+                        <span class="notification-badge">
+                            {{ unread_count.count }}
+                        </span>
+                    {% endwith %}
+                {% endif %}
+            </a>
+            <a href="{% url 'notification_list' %}">
+                🔔 Notifications
+                {% if unread_notification_count > 0 %}
+                    <span class="notification-badge">
+                        {{ unread_notification_count }}
+                    </span>
+                {% endif %}
+            </a>
+           
+            {% if user.is_authenticated and user.role == "CANDIDATE" %}
+                <a href="{% url 'candidate_profile' %}">My Profile</a>
+            {% endif %}
+            
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

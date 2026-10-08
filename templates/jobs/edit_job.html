@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Job | HireFlow{% endblock %}
+
+{% block content %}
+
+<h2>Edit Job Posting</h2>
+
+<p>Update the details for {{ job.title }}.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Save Changes</button>
+    <a href="{% url 'recruiter_dashboard' %}">Cancel</a>
+</form>
+
+{% endblock %}

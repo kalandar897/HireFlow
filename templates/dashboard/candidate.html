@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Candidate Dashboard | HireFlow{% endblock %}
+
+{% block content %}
+
+<h2>Candidate Dashboard</h2>
+<p>Welcome, {{ request.user.username }}!</p>
+
+<p>
+    <a href="{% url 'job_list' %}">Browse Jobs</a> |
+    <a href="{% url 'candidate_interviews' %}">My Interviews</a> |
+    <a href="{% url 'candidate_profile' %}">My Profile</a>
+</p>
+
+<hr>
+
+<h3>Application Summary</h3>
+
+<div class="dashboard-stats">
+    <p><strong>Total Applications:</strong> {{ stats.total }}</p>
+    <p><strong>Applied:</strong> {{ stats.applied }}</p>
+    <p><strong>Shortlisted:</strong> {{ stats.shortlisted }}</p>
+    <p><strong>Interview:</strong> {{ stats.interview }}</p>
+    <p><strong>Selected:</strong> {{ stats.selected }}</p>
+    <p><strong>Rejected:</strong> {{ stats.rejected }}</p>
+</div>
+
+<hr>
+
+<h3>My Applications</h3>
+
+{% for application in applications %}
+    <article class="application-card">
+        <h4>{{ application.job.title }}</h4>
+
+        <p>
+            <strong>Company:</strong>
+            {{ application.job.company }}
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            {{ application.job.location }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+
+            {% if application.status == "SELECTED" %}
+                <span style="color: green;"><strong>Selected</strong></span>
+            {% elif application.status == "REJECTED" %}
+                <span style="color: red;"><strong>Rejected</strong></span>
+            {% elif application.status == "SHORTLISTED" %}
+                <span style="color: blue;"><strong>Shortlisted</strong></span>
+            {% elif application.status == "INTERVIEW" %}
+                <span style="color: darkorange;"><strong>Interview</strong></span>
+            {% else %}
+                <span>Applied</span>
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Applied on:</strong>
+            {{ application.applied_at|date:"d M Y, h:i A" }}
+        </p>
+    </article>
+
+    <hr>
+
+{% empty %}
+    <p>You have not applied for any jobs yet.</p>
+    <a href="{% url 'job_list' %}">Browse available jobs</a>
+{% endfor %}
+
+<hr>
+
+<h3>My Upcoming Interviews</h3>
+
+{% for interview in interviews %}
+    <article class="interview-card">
+        <h4>{{ interview.application.job.title }}</h4>
+
+        <p>
+            <strong>Date and Time:</strong>
+            {{ interview.interview_date|date:"d M Y, h:i A" }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ interview.status }}
+        </p>
+    </article>
+
+    <hr>
+
+{% empty %}
+    <p>No interviews scheduled yet.</p>
+{% endfor %}
+
+{% endblock %}

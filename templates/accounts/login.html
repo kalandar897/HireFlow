@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Login - HireFlow{% endblock %}
+
+{% block content %}
+
+<style>
+
+.login-page {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 35px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.login-card h1 {
+    text-align: center;
+    color: #14213d;
+    margin-bottom: 8px;
+}
+
+.login-description {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.login-form p {
+    margin-bottom: 18px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    color: #334155;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
+}
+
+.login-form input:focus {
+    border-color: #2563eb;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background: #1d4ed8;
+}
+
+.login-register {
+    text-align: center;
+    margin-top: 20px;
+    color: #64748b;
+}
+
+.login-register a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-error {
+    color: #dc2626;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+</style>
+
+
+<div class="login-page">
+
+    <div class="login-card">
+
+        <h1>Welcome Back</h1>
+
+        <p class="login-description">
+            Login to your HireFlow account
+        </p>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="login-error">
+                {{ form.non_field_errors }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST" class="login-form">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <p>
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+
+                        <span class="login-error">
+                            {{ error }}
+                        </span>
+
+                    {% endfor %}
+
+                </p>
+
+            {% endfor %}
+
+
+            <button type="submit" class="login-button">
+                Login
+            </button>
+
+        </form>
+
+
+        <div class="login-register">
+
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

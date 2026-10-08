@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="candidate-profile">
+
+    <h1>Candidate Profile</h1>
+    <p class="subtitle">Candidate details for the applied job.</p>
+
+    <hr>
+
+    {% if profile %}
+        <h2>{{ profile.full_name|default:application.candidate.username }}</h2>
+
+        <p>
+            <strong>Email:</strong>
+            {{ application.candidate.email|default:"Not provided" }}
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            {{ profile.phone|default:"Not provided" }}
+        </p>
+
+        <p>
+            <strong>Education:</strong>
+            {{ profile.education|default:"Not provided" }}
+        </p>
+
+        <p>
+            <strong>Skills:</strong>
+            {{ profile.skills|default:"Not provided"|linebreaksbr }}
+        </p>
+
+        <p>
+            <strong>Experience:</strong>
+            {{ profile.experience|default:"Not provided" }}
+        </p>
+        <p>
+            <strong>Profile Resume:</strong>
+            {% if profile and profile.resume %}
+                <a href="{{ profile.resume.url }}" target="_blank" rel="noopener">
+                    View / Download Profile Resume
+                </a>
+            {% else %}
+                No profile resume uploaded.
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Application Resume:</strong>
+            {% if application.resume %}
+                <a href="{{ application.resume.url }}" target="_blank" rel="noopener">
+                    View / Download Application Resume
+                </a>
+            {% else %}
+                No application resume uploaded.
+            {% endif %}
+        </p>
+
+    {% else %}
+        <p>This candidate has not created a profile yet.</p>
+        <p>
+            <strong>Username:</strong>
+            {{ application.candidate.username }}
+        </p>
+        <p>
+            <strong>Email:</strong>
+            {{ application.candidate.email|default:"Not provided" }}
+        </p>
+    {% endif %}
+
+    <hr>
+
+    <p>
+        <strong>Applied Job:</strong>
+        {{ application.job.title }}
+    </p>
+
+    <p>
+        <strong>Application Status:</strong>
+        {{ application.get_status_display }}
+    </p>
+
+    <a href="{% url 'recruiter_applications' %}">
+        ← Back to Applications
+    </a>
+
+</div>
+{% endblock %}

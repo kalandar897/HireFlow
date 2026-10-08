@@ -1,0 +1,1 @@
+console.log("HireFlow application loaded successfully.");

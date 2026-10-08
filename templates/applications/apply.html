@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Apply for {{ job.title }}</h2>
+
+<p><strong>Company:</strong> {{ job.company }}</p>
+<p><strong>Location:</strong> {{ job.location }}</p>
+<p>{{ job.description }}</p>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Submit Application</button>
+</form>
+
+<a href="{% url 'job_list' %}">Back to Jobs</a>
+
+{% endblock %}

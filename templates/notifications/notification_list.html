@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireFlow Notifications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .notification {
+            background: white;
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border-left: 5px solid #2563eb;
+        }
+
+        .read {
+            border-left-color: #9ca3af;
+            opacity: 0.8;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 9px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .empty {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>My Notifications</h1>
+
+    <p>Unread notifications: {{ unread_count }}</p>
+
+    {% for notification in notifications %}
+        <div class="notification {% if notification.is_read %}read{% endif %}">
+            <div class="top">
+                <strong>
+                    {% if notification.is_read %}
+                        Read
+                    {% else %}
+                        Unread
+                    {% endif %}
+                </strong>
+
+                {% if not notification.is_read %}
+                    <form method="POST"
+                          action="{% url 'mark_as_read' notification.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Mark as Read</button>
+                    </form>
+                {% endif %}
+            </div>
+
+            <p>{{ notification.message }}</p>
+            <small>{{ notification.created_at|date:"d M Y, h:i A" }}</small>
+        </div>
+    {% empty %}
+        <div class="empty">
+            No notifications yet.
+        </div>
+    {% endfor %}
+
+    <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+</div>
+</body>
+</html>

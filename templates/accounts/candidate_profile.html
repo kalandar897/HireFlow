@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.profile-container {
+    max-width: 750px;
+    margin: 35px auto;
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.profile-container h1 {
+    margin-top: 0;
+    color: #1e293b;
+}
+
+.profile-description {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.profile-form p {
+    margin-bottom: 18px;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.profile-form input:not([type="checkbox"]),
+.profile-form textarea,
+.profile-form select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.profile-form input[type="file"] {
+    padding: 8px;
+}
+
+.profile-button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.profile-button:hover {
+    background: #1d4ed8;
+}
+
+.profile-back {
+    display: inline-block;
+    margin-left: 10px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.profile-error {
+    color: #dc2626;
+    font-size: 14px;
+}
+</style>
+
+<div class="profile-container">
+    <h1>My Candidate Profile</h1>
+
+    <p class="profile-description">
+        Add your details, skills, education and resume to help recruiters
+        understand your background.
+    </p>
+
+    <form method="POST"
+          enctype="multipart/form-data"
+          class="profile-form">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <p>
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <span class="profile-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div class="profile-error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="profile-button">
+            Save Profile
+        </button>
+
+        <a href="{% url 'candidate_dashboard' %}" class="profile-back">
+            Back to Dashboard
+        </a>
+    </form>
+</div>
+{% endblock %}

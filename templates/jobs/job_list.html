@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Find Jobs - HireFlow{% endblock %}
+
+{% block content %}
+
+<div class="jobs-page">
+
+    <div class="jobs-header">
+
+        <h2>Find Your Next Job</h2>
+
+        <p>
+            Search for jobs based on your skills and preferred location.
+        </p>
+
+    </div>
+
+    <div class="job-search">
+
+        <form method="GET" action="">
+
+            <div class="search-field">
+
+                <label for="job-search">
+                    Job title or keyword
+                </label>
+
+                <input
+                    id="job-search"
+                    type="text"
+                    name="q"
+                    placeholder="Python Developer"
+                    value="{{ search_query }}"
+                >
+
+            </div>
+
+
+            <div class="search-field">
+
+                <label for="job-location">
+                    Location
+                </label>
+
+                <input
+                    id="job-location"
+                    type="text"
+                    name="location"
+                    placeholder="Bengaluru"
+                    value="{{ location_query }}"
+                >
+
+            </div>
+
+
+            <div class="search-actions">
+
+                <button type="submit">
+                    Search Jobs
+                </button>
+
+                <a href="{{ request.path }}">
+                    Clear Filters
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="jobs-list">
+
+        {% for job in jobs %}
+
+            <article class="job-card">
+
+                <div class="job-card-header">
+
+                    <h3>{{ job.title }}</h3>
+
+                    <span class="job-badge">
+                        Active
+                    </span>
+
+                </div>
+
+
+                <div class="job-details">
+
+                    <p>
+                        <strong>Company:</strong>
+                        {{ job.company }}
+                    </p>
+
+                    <p>
+                        <strong>Location:</strong>
+                        {{ job.location }}
+                    </p>
+
+                    <p>
+                        <strong>Required Skills:</strong>
+                        {{ job.required_skills }}
+                    </p>
+
+                </div>
+
+
+                <div class="job-description">
+
+                    <p>
+                        {{ job.description|truncatewords:25 }}
+                    </p>
+
+                </div>
+
+
+                <div class="job-action">
+
+                    <a
+                        href="{% url 'apply_job' job.id %}"
+                        class="apply-button"
+                    >
+                        Apply Now
+                    </a>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="no-jobs">
+
+                <div class="no-jobs-icon">
+                    🔍
+                </div>
+
+                <h3>No jobs are available right now.</h3>
+
+                <p>
+                    Please check again later.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

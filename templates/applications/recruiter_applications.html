@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Applications | HireFlow{% endblock %}
+
+{% block content %}
+
+<h2>Candidate Applications</h2>
+
+<form method="GET" action="">
+    <div>
+        <label for="candidate-search">Search candidates or jobs</label>
+        <input
+            type="text"
+            id="candidate-search"
+            name="q"
+            placeholder="Username, email, or job title"
+            value="{{ search_query }}"
+        >
+    </div>
+
+    <div>
+        <label for="application-status">Filter by status</label>
+        <select id="application-status" name="status">
+            <option value="">All Applications</option>
+
+            <option value="APPLIED"
+                {% if status_filter == "APPLIED" %}selected{% endif %}>
+                Applied
+            </option>
+
+            <option value="SHORTLISTED"
+                {% if status_filter == "SHORTLISTED" %}selected{% endif %}>
+                Shortlisted
+            </option>
+
+            <option value="INTERVIEW"
+                {% if status_filter == "INTERVIEW" %}selected{% endif %}>
+                Interview
+            </option>
+
+            <option value="SELECTED"
+                {% if status_filter == "SELECTED" %}selected{% endif %}>
+                Selected
+            </option>
+
+            <option value="REJECTED"
+                {% if status_filter == "REJECTED" %}selected{% endif %}>
+                Rejected
+            </option>
+        </select>
+    </div>
+
+    <button type="submit">Search / Filter</button>
+    <a href="{{ request.path }}">Clear Filters</a>
+</form>
+
+<hr>
+
+{% for application in applications %}
+
+<div class="application-card">
+
+    <h3>{{ application.job.title }}</h3>
+
+    <p>
+        <strong>Candidate:</strong>
+        {{ application.candidate.username }}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{ application.candidate.email }}
+    </p>
+    <a href="{% url 'view_candidate_profile' application.id %}">View Profile</a>
+    <p>
+        <strong>Applied on:</strong>
+        {{ application.applied_at|date:"d M Y" }}
+    </p>
+
+    <p>
+        <strong>Current Status:</strong>
+        {{ application.get_status_display }}
+    </p>
+    
+    {% if application.status != "SELECTED" and application.status != "REJECTED" %}
+        <form method="post"
+            action="{% url 'update_application_result' application.id %}">
+            {% csrf_token %}
+
+            <button type="submit" name="status" value="SELECTED">
+                Select Candidate
+            </button>
+
+            <button type="submit" name="status" value="REJECTED">
+                Reject Candidate
+            </button>
+        </form>
+    {% endif %}
+
+    {% if application.resume %}
+        <p>
+            <a href="{{ application.resume.url }}"
+               target="_blank"
+               rel="noopener noreferrer">
+                View / Download Resume
+            </a>
+        </p>
+    {% else %}
+        <p>No resume uploaded.</p>
+    {% endif %}
+
+    <form method="post"
+          action="{% url 'update_application_status' application.id %}">
+
+        {% csrf_token %}
+
+        <label for="status-{{ application.id }}">
+            Change Application Status:
+        </label>
+
+        <select name="status" id="status-{{ application.id }}">
+            <option value="SHORTLISTED"
+                {% if application.status == "SHORTLISTED" %}selected{% endif %}>
+                Shortlisted
+            </option>
+
+            <option value="INTERVIEW"
+                {% if application.status == "INTERVIEW" %}selected{% endif %}>
+                Interview
+            </option>
+
+            <option value="SELECTED"
+                {% if application.status == "SELECTED" %}selected{% endif %}>
+                Selected
+            </option>
+
+            <option value="REJECTED"
+                {% if application.status == "REJECTED" %}selected{% endif %}>
+                Rejected
+            </option>
+        </select>
+        {% if application.status == "SHORTLISTED" %}
+            <p>
+                <a href="{% url 'schedule_interview' application.id %}">
+                    Schedule Interview
+                </a>
+            </p>
+        {% endif %}
+
+        <button type="submit">Update Status</button>
+
+    </form>
+
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>No applications received yet.</p>
+
+{% endfor %}
+
+{% endblock %}
