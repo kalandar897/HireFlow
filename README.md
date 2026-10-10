@@ -6,6 +6,66 @@ HireFlow is a web-based Job Recruitment Management System developed using Django
 
 The system provides role-based access and supports the complete recruitment workflow, from job posting and candidate applications to application tracking and interview scheduling.
 
+## 🌐 Live Demo
+
+**Live Website:** [Open HireFlow](PASTE_YOUR_PYTHONANYWHERE_URL)
+
+**GitHub Repository:** https://github.com/kalandar897/HireFlow
+
+## ⚙️ Installation and Setup
+
+### Prerequisites
+- Python
+- pip
+- Git
+
+### Steps
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/kalandar897/HireFlow.git
+   cd HireFlow
+   ```
+
+2. Create and activate a virtual environment:
+
+   ```bash
+   python -m venv venv
+   ```
+
+   Windows:
+
+   ```bash
+   venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Apply database migrations:
+
+   ```bash
+   python manage.py migrate
+   ```
+
+5. Create an administrator account:
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+6. Start the development server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+7. Open http://127.0.0.1:8000/ in your browser.
+
 ## Technologies Used
 
 - **Backend:** Python, Django
